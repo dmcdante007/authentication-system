@@ -21,7 +21,7 @@ const AuthForm = () => {
 
     } else {
       fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAvOmNGLPl3_8el7x7ah_Ha8s9rF9P5pb4",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[apikey]",
         {
           method: "POST",
           body: JSON.stringify({
