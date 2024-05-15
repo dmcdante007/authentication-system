@@ -9,7 +9,7 @@ const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsloading] = useState(false);
 
-  const ctx = useContext(AuthContext)
+  const ctx = useContext(AuthContext);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -27,20 +27,22 @@ const AuthForm = () => {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAvOmNGLPl3_8el7x7ah_Ha8s9rF9P5pb4";
     } else {
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAvOmNGLPl3_8el7x7ah_Ha8s9rF9P5pb4",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: enteredEmail,
-            password: enteredPassword,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAvOmNGLPl3_8el7x7ah_Ha8s9rF9P5pb4";
+    }
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPassword,
+        returnSecureToken: true,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        setIsloading(false);
         if (res.ok) {
           return res.json();
         } else {
@@ -49,13 +51,13 @@ const AuthForm = () => {
             // if (data && data.error && data.error.message) {
             //   errorMessage = data.error.message;
             // }
-            alert(errorMessage);
+            // alert(errorMessage);
             throw new Error(errorMessage);
           });
         }
       })
       .then((data) => {
-        ctx.login(data.idToken)
+        ctx.login(data.idToken);
         console.log(data);
       })
       .catch((err) => {
